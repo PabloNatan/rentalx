@@ -10,18 +10,8 @@ import {
 class CategoriesRepository implements ICategoriesRepository {
   private repository: Repository<Category>;
 
-  private static INSTANCE: ICategoriesRepository;
-
-  private constructor() {
+  constructor() {
     this.repository = DataSourceConfig.getRepository(Category);
-  }
-
-  public static getInstance(): ICategoriesRepository {
-    if (!CategoriesRepository.INSTANCE) {
-      CategoriesRepository.INSTANCE = new CategoriesRepository();
-    }
-
-    return CategoriesRepository.INSTANCE;
   }
 
   create = async ({ description, name }: ICreateCategoryDTO): Promise<void> => {
@@ -29,7 +19,6 @@ class CategoriesRepository implements ICategoriesRepository {
       description,
       name,
     });
-    console.log('EAE');
 
     await this.repository.save(category);
   };
